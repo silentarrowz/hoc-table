@@ -23,19 +23,19 @@ hello, {props.myName}
               type="text"
           name="name"
           value={props.name}
-          onChange={props.handleName}
+          onChange={props.handleAllChange}
         /><br/>
        Dad : <input
               type="text"
          name="dad"
         value={props.dad}
-        onChange={props.handleDadName}
+        onChange={props.handleAllChange}
        /><br/>
        Mom : <input
               type="text"
          name="mom"
          value={props.mom}
-         onChange={props.handleMomName}
+         onChange={props.handleAllChange}
        /><br/>
             <button
               type="submit"
@@ -58,10 +58,11 @@ class App extends React.Component {
      // showForm: false,
     };
 
-    this.handleName = this.handleName.bind(this);
+   /* this.handleName = this.handleName.bind(this);
     this.handleDadName = this.handleDadName.bind(this);
-    this.handleMomName = this.handleMomName.bind(this);
+    this.handleMomName = this.handleMomName.bind(this); */
     this.submitData = this.submitData.bind(this);
+    this.handleAllChange = this.handleAllChange.bind(this);
   }
 
   
@@ -120,6 +121,14 @@ class App extends React.Component {
     return columns;
   }
 
+  handleAllChange(e){
+    console.log('event : ',e.target.value);
+    const itemChanged = e.target.name;
+    const newState = {[itemChanged]:e.target.value}
+    console.log('newstate is : ',newState);
+    this.setState(newState);
+  }
+/*
   handleName(e) {
     console.log(e.target.value);
     this.setState({
@@ -139,7 +148,7 @@ class App extends React.Component {
       mom: e.target.value,
     });
   }
-
+*/
   submitData(e) {
     e.preventDefault();
     this.setState({
@@ -184,6 +193,7 @@ class App extends React.Component {
       handleName={this.handleName}
       handleDadName={this.handleDadName}
       handleMomName={this.handleMomName}
+      handleAllChange={this.handleAllChange}
       submitData={this.submitData}
        />
     
