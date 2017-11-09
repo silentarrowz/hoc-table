@@ -6,9 +6,27 @@ import * as edit from 'react-edit';
 import { connect } from 'react-redux';
 import actions from './actions';
 
+const Form = (props) =>{
+  const propState = props.state;
+  return (  <form>
+ { props.columns.map((item)=>(
+   <div>
+  {item.property}   <input 
+      type='text'
+      name={item.property}
+      value={propState[item.property]}
+      onChange={props.handleAllChange}
+       /><br/>
+       </div>
+  ))}
+  <button
+              type="submit"
+             onClick={props.submitData}
+            >Submit</button>
+  </form>)
+};
 
 const Hello =(props)=>(<div>
-hello, {props.myName} 
 <Table.Provider
   className="pure-table pure-table-striped"
   columns={props.columns}
@@ -17,31 +35,11 @@ hello, {props.myName}
 
   <Table.Body rows={props.rows} rowKey="id" />
 </Table.Provider>
-{props.showForm
-          ? (<form>
-        Name : <input
-              type="text"
-          name="name"
-          value={props.name}
-          onChange={props.handleAllChange}
-        /><br/>
-       Dad : <input
-              type="text"
-         name="dad"
-        value={props.dad}
-        onChange={props.handleAllChange}
-       /><br/>
-       Mom : <input
-              type="text"
-         name="mom"
-         value={props.mom}
-         onChange={props.handleAllChange}
-       /><br/>
-            <button
-              type="submit"
-             onClick={props.submitData}
-            >Submit</button>
-          </form>) : ''}
+{props.state.showForm
+          ? <Form columns={props.columns} rows={props.rows} state={props.state} 
+          submitData={props.submitData}
+          handleAllChange={props.handleAllChange}
+           />  :'' }
 </div>);
 
 class App extends React.Component {
@@ -50,10 +48,10 @@ class App extends React.Component {
 
     this.state = {
       columns: this.getColumns(), // initial columns
-      name: '',
+     /* name: '',
       id: '',
       dad: '',
-      mom: '',
+      mom: '',*/
       showForm:false
      // showForm: false,
     };
@@ -71,14 +69,7 @@ class App extends React.Component {
       isEditing: ({ columnIndex, rowData }) => columnIndex === rowData.editing,
       onActivate: ({ columnIndex, rowData }) => {
         // this.props.editRow(columnIndex, rowData.id);
-
-        this.setState({
-          id: rowData.id,
-          name: rowData.name,
-          dad: rowData.dad,
-          mom: rowData.mom,
-          showForm: true,
-        }, console.log(this.state));
+        this.setState({ ...rowData, showForm:true}, console.log(this.state));
         console.log('columnIndex on activate : ', columnIndex);
         console.log('rowData on activate : ', rowData);
       },
@@ -124,7 +115,9 @@ class App extends React.Component {
   handleAllChange(e){
     console.log('event : ',e.target.value);
     const itemChanged = e.target.name;
-    const newState = {[itemChanged]:e.target.value}
+    const newState = {[itemChanged]:e.target.value} 
+    // [itemChanged] in [] above so it's seen as a variable instead of a string.
+    // hence the importance of using [] above
     console.log('newstate is : ',newState);
     this.setState(newState);
   }
@@ -183,16 +176,10 @@ class App extends React.Component {
     
    
       <Hello  
-      myName={nameF}
+      
       columns={this.state.columns}
       rows={rows} 
-      name={this.state.name}
-      mom={this.state.mom}
-      dad={this.state.dad}
-      showForm={this.state.showForm}
-      handleName={this.handleName}
-      handleDadName={this.handleDadName}
-      handleMomName={this.handleMomName}
+      state={this.state}
       handleAllChange={this.handleAllChange}
       submitData={this.submitData}
        />
