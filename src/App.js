@@ -149,8 +149,6 @@ class App extends React.Component {
       showForm: false,
     });
     const stateItems = this.state;
-    let stateItemsArray = Object.values(stateItems);    
-    console.log('stateItemsArray : ',stateItemsArray);
     this.props.editFunc(stateItems, this.props.rows);
   }
 
