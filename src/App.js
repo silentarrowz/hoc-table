@@ -6,11 +6,12 @@ import * as edit from 'react-edit';
 import { connect } from 'react-redux';
 import actions from './actions';
 
+
 const Form = (props) =>{
   const propState = props.state;
   return (  <form>
- { props.columns.map((item)=>(
-   <div>
+ { props.columns.map((item,idx)=>(
+   <div key={idx} >
   {item.property}   <input 
       type='text'
       name={item.property}
@@ -75,8 +76,8 @@ class App extends React.Component {
       },
       onValue: ({ value, rowData, property }) => {
         this.props.confirmEdit(property, value, rowData.id);
-        console.log('property :', property);
-        console.log('value : ', value);
+        console.log('property onValue:', property);
+        console.log('value onValue : ', value);
       }
     });
     const columns = [
@@ -147,7 +148,10 @@ class App extends React.Component {
     this.setState({
       showForm: false,
     });
-    this.props.editFunc(this.state.id, this.state.name, this.state.dad, this.state.mom, this.props.rows);
+    const stateItems = this.state;
+    let stateItemsArray = Object.values(stateItems);    
+    console.log('stateItemsArray : ',stateItemsArray);
+    this.props.editFunc(stateItems, this.props.rows);
   }
 
   render(){
@@ -201,7 +205,7 @@ const mapDispatchToProps = (dispatch) => ({
     row: { name: 'John Doe', id: uuid.v4() }
   }),
   */
-  editFunc: (id, name, address, abbrev, rows) => dispatch(actions.editRow(id, name, address, abbrev, rows)),
+  editFunc: (stateItems, rows) => dispatch(actions.editRow(stateItems, rows)),
   confirmEdit: (property, value, id) => dispatch({
     type: 'CONFIRM_EDIT',
     row: { property, value, id },

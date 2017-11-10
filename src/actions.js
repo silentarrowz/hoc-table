@@ -2,9 +2,9 @@ import uuid from 'uuid';
 
 const actions = {
   
-  editRow: (id, name, dad, mom, rows) => ({
+  editRow: (stateItems, rows) => ({
     type: 'EDIT_ROW',
-    row: { id, name, dad, mom, rows },
+    row: { stateItems, rows },
   }),
   confirmEdit: (property, value, id) => ({
     type: 'CONFIRM_EDIT',

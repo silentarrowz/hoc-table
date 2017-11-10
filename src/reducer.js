@@ -24,15 +24,18 @@ const reducer = (state, action) => {
       const newRows = cloneDeep(action.row.rows);
 
       console.log('newRows.length : ', newRows.length);
-      const newName = action.row.name;
+     /* const newName = action.row.name;
       const newDad = action.row.dad;
-      const newMom = action.row.mom;
-
+      const newMom = action.row.mom; */
+      //const editedItems = action.row.stateItems;
       for (let i = 0; i < newRows.length; i++) {
-        if (newRows[i].id === action.row.id) {
-          newRows[i].name = newName;
+        if (newRows[i].id === action.row.stateItems.id) {
+          Object.keys(newRows[i]).forEach((item)=>{
+            newRows[i][item]=action.row.stateItems[item];
+          })
+          /*newRows[i].name = newName;
           newRows[i].dad = newDad;
-          newRows[i].mom = newMom;
+          newRows[i].mom = newMom; */
           console.log('newRows : ', newRows);
 
           return newRows;
