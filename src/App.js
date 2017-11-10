@@ -48,7 +48,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      columns: this.getColumns(), // initial columns
+      columns: this.getColumns(this.props.columns), // initial columns
      /* name: '',
       id: '',
       dad: '',
@@ -65,7 +65,7 @@ class App extends React.Component {
   }
 
   
-  getColumns() {
+  getColumns(columns) {
     const editable = edit.edit({
       isEditing: ({ columnIndex, rowData }) => columnIndex === rowData.editing,
       onActivate: ({ columnIndex, rowData }) => {
@@ -80,6 +80,10 @@ class App extends React.Component {
         console.log('value onValue : ', value);
       }
     });
+
+      
+
+    /*
     const columns = [
       {
         property: 'name',
@@ -109,9 +113,16 @@ class App extends React.Component {
         }
       }
     ];
+    */
 
+    columns.map((item)=>{
+      item.cell.transforms = [editable(edit.input())];
+    });
+    
     return columns;
+    
   }
+
 
   handleAllChange(e){
     console.log('event : ',e.target.value);
@@ -149,12 +160,12 @@ class App extends React.Component {
       showForm: false,
     });
     const stateItems = this.state;
-    this.props.editFunc(stateItems, this.props.rows);
+    this.props.editFunc(stateItems, this.props.rowdata);
   }
 
   render(){
     const nameF='Faraz';
-    const { rows } = this.props;
+    //const { rows } = this.props;
     
     /*
     const rows = [
@@ -174,13 +185,19 @@ class App extends React.Component {
       },
     ];
     */
+    let rowz='';
+    if(this.props.rows){
+      rowz = this.props.rows;
+    }else{
+      rowz=this.props.rowdata;
+    }
     return(   <div className="App">
     
    
       <Hello  
       
       columns={this.state.columns}
-      rows={rows} 
+      rows={rowz} 
       state={this.state}
       handleAllChange={this.handleAllChange}
       submitData={this.submitData}

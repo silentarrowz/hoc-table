@@ -1,5 +1,5 @@
 const initialState ={
-    theRows:[{
+    /*theRows:[{
         id: 100,
         name: 'Adam',
         dad: 'John',
@@ -14,7 +14,7 @@ const initialState ={
         
       }
   
-        ]
+        ]*/
   }
   
   export default initialState;
