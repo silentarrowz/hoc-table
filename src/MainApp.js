@@ -82,7 +82,7 @@ export default class MainApp extends Component{
             }
           ];
 
-      const theRows = [{
+      const theRows = {'dad':[{
             id: 100,
             name: 'Adam',
             dad: 'John',
@@ -93,9 +93,9 @@ export default class MainApp extends Component{
             name: 'Brian',
             dad: 'George',
             mom:'Benny'
-            }];
+            }]};
 
-       const newTableData = [{
+       const newTableData = {'friends':[{
             id: 100,
             location: 'Goa',
             hobby: 'music',
@@ -114,10 +114,11 @@ export default class MainApp extends Component{
             
           }
       
-            ];
+            ]};
 
       return(
           <div>
+             <AppConnect columns={columns} rowdata={theRows} />
         <AppConnect columns={newTable} rowdata={newTableData} />
         </div>
       )  

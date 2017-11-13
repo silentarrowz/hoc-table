@@ -1,4 +1,4 @@
-import { cloneDeep, findIndex } from 'lodash';
+import { cloneDeep, findIndex,merge } from 'lodash';
 
 
 const reducer = (state, action) => {
@@ -21,26 +21,58 @@ const reducer = (state, action) => {
     }
     */
     case 'EDIT_ROW': {
-      const newRows = cloneDeep(action.row.rows);
-
-      console.log('newRows.length : ', newRows.length);
-     /* const newName = action.row.name;
-      const newDad = action.row.dad;
-      const newMom = action.row.mom; */
-      //const editedItems = action.row.stateItems;
-      for (let i = 0; i < newRows.length; i++) {
-        if (newRows[i].id === action.row.stateItems.id) {
-          Object.keys(newRows[i]).forEach((item)=>{
-            newRows[i][item]=action.row.stateItems[item];
-          })
-          /*newRows[i].name = newName;
-          newRows[i].dad = newDad;
-          newRows[i].mom = newMom; */
-          console.log('newRows : ', newRows);
-
-          return newRows;
+      const tableToEdit = action.row.stateItems.whichTable;
+      
+      if(state){
+          const editingRows = cloneDeep(state);
+          if(editingRows[tableToEdit]){
+            for(let i=0;i<editingRows[tableToEdit].length;i++){
+             if(editingRows[tableToEdit][i].id === action.row.stateItems.id){
+              Object.keys(editingRows[tableToEdit][i]).forEach((item)=>{
+                editingRows[tableToEdit][i][item]=action.row.stateItems[item];
+              });
+             }
+            }
+            console.log('editingRows is : ',editingRows);
+            const newState = merge({},state,editingRows);
+            console.log('newState is : ',newState);
+             console.log('editingRows is : ',editingRows);
+             return newState;
+          }else{
+            const newRows = action.row.rows;
+            for(let i =0;i<newRows[tableToEdit].length;i++){
+              if(newRows[tableToEdit][i].id === action.row.stateItems.id){
+                Object.keys(newRows[tableToEdit][i]).forEach((item)=>{
+                  newRows[tableToEdit][i][item]=action.row.stateItems[item];
+                });
+              }
+            }
+            console.log('newRows is : ',newRows);
+            const newState = merge({},state,newRows);
+            console.log('newState is : ',newState);
+            return newState;
+          }
+         //const newRowData = action.row.rows;
+        
+        
+          
+      }else{
+        const newRows = action.row.rows;
+        for(let i =0;i<newRows[tableToEdit].length;i++){
+          if(newRows[tableToEdit][i].id === action.row.stateItems.id){
+            Object.keys(newRows[tableToEdit][i]).forEach((item)=>{
+              newRows[tableToEdit][i][item]=action.row.stateItems[item];
+            });
+          }
         }
+        console.log('newRows is : ',newRows);
+        const newState = merge({},newRows);
+        console.log('newState is : ',newState);
+        return newState;
       }
+     
+   
+     
     }
 
 

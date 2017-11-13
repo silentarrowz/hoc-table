@@ -53,6 +53,7 @@ class App extends React.Component {
       id: '',
       dad: '',
       mom: '',*/
+      whichTable:this.getTableKey(this.props.rowdata),
       showForm:false
      // showForm: false,
     };
@@ -64,6 +65,11 @@ class App extends React.Component {
     this.handleAllChange = this.handleAllChange.bind(this);
   }
 
+  getTableKey(rowdata){
+   const tableKey= (Object.keys(rowdata))[0];
+   //const tableName = this.props.rowdata[tableKey];
+   return tableKey;
+  }
   
   getColumns(columns) {
     const editable = edit.edit({
@@ -164,32 +170,20 @@ class App extends React.Component {
   }
 
   render(){
-    const nameF='Faraz';
-    //const { rows } = this.props;
-    
-    /*
-    const rows = [
-      {
-        id: 100,
-        name: 'Adam',
-        dad: 'John',
-        mom:'Trisha'
-        
-      },
-      {
-        id: 101,
-        name: 'Brian',
-        dad: 'George',
-        mom:'Benny'
-        
-      },
-    ];
-    */
-    let rowz='';
-    if(this.props.rows){
-      rowz = this.props.rows;
-    }else{
-      rowz=this.props.rowdata;
+   let rowz='';
+   let whichTable = this.state.whichTable;
+    if(this.props.rows && this.props.rows[whichTable]){
+      let tableKey = (Object.keys(this.props.rows))[0];
+      
+      if( tableKey === whichTable){
+        rowz = this.props.rows[whichTable];
+       }
+    }else {
+      const rowdataKey = (Object.keys(this.props.rowdata))[0];
+      if(rowdataKey===this.state.whichTable){
+        rowz=this.props.rowdata[rowdataKey];
+      }
+      
     }
     return(   <div className="App">
     
