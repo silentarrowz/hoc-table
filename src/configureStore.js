@@ -3,6 +3,9 @@ import reducer from './reducer';
 import initialState from './initialState';
 
 
-const store = createStore(reducer,initialState.theRows);
+const store = createStore(reducer,initialState.theRows,
+     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+   
+);
 
 export default store;
