@@ -27,6 +27,43 @@ const Form = (props) =>{
   </form>)
 };
 
+class Hello extends React.Component{
+  
+  render(){
+    const {columns,rows,state} =this.props
+    const BodyWrapper = props => <tbody {...props} />;
+    BodyWrapper.shouldComponentUpdate = true;
+    const RowWrapper = props => <tr {...props} />;
+    RowWrapper.shouldComponentUpdate = true;
+    
+    return(
+      <div>
+      <Table.Provider
+        className="pure-table pure-table-striped"
+        columns={columns}
+        components={{
+    body: {
+      wrapper: BodyWrapper,
+      row: RowWrapper
+    }
+  }}
+
+      >
+        <Table.Header />
+      
+        <Table.Body rows={rows} rowKey="id"/>
+      </Table.Provider >
+      {this.props.state.showForm
+                ? <Form columns={columns} rows={rows} state={state} 
+                submitData={this.props.submitData}
+                handleAllChange={this.props.handleAllChange}
+                 />  :'' }
+      </div>
+    );
+  }
+}
+
+/*
 const Hello =(props)=>(<div>
 <Table.Provider
   className="pure-table pure-table-striped"
@@ -34,14 +71,15 @@ const Hello =(props)=>(<div>
 >
   <Table.Header />
 
-  <Table.Body rows={props.rows} rowKey="id" />
-</Table.Provider>
+  <Table.Body rows={props.rows} rowKey="id"/>
+</Table.Provider >
 {props.state.showForm
           ? <Form columns={props.columns} rows={props.rows} state={props.state} 
           submitData={props.submitData}
           handleAllChange={props.handleAllChange}
            />  :'' }
 </div>);
+*/
 
 class App extends React.Component {
   constructor(props) {
@@ -173,10 +211,11 @@ class App extends React.Component {
    let rowz='';
    let whichTable = this.state.whichTable;
     if(this.props.rows && this.props.rows[whichTable]){
-      let tableKey = (Object.keys(this.props.rows))[0];
-      
-      if( tableKey === whichTable){
+      let tableKeys = Object.keys(this.props.rows);
+      if(tableKeys.indexOf(whichTable)!= -1){
         rowz = this.props.rows[whichTable];
+      }else{
+         rowz = this.props.rowdata[whichTable];
        }
     }else {
       const rowdataKey = (Object.keys(this.props.rowdata))[0];

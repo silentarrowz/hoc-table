@@ -120,6 +120,7 @@ export default class MainApp extends Component{
           <div>
              <AppConnect columns={columns} rowdata={theRows} />
         <AppConnect columns={newTable} rowdata={newTableData} />
+        
         </div>
       )  
     }
