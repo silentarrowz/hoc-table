@@ -1,5 +1,7 @@
 import AppConnect from './App.js';
 import React, { Component } from 'react';
+import ExternalForm from './ExternalForm';
+
 
 export default class MainApp extends Component{
     
@@ -27,6 +29,15 @@ export default class MainApp extends Component{
               property: 'mom',
               header: {
                 label: 'Mom'
+              },
+              cell: {
+                transforms: '',
+              }
+            },
+            {
+              property: 'gender',
+              header: {
+                label: 'Gender'
               },
               cell: {
                 transforms: '',
@@ -86,13 +97,15 @@ export default class MainApp extends Component{
             id: 100,
             name: 'Adam',
             dad: 'John',
-            mom:'Trisha'
+            mom:'Trisha',
+            gender:'Male'
             },
           {
             id: 101,
-            name: 'Brian',
+            name: 'Betty',
             dad: 'George',
-            mom:'Benny'
+            mom:'Benny',
+            gender:'Male'
             }]};
 
        const newTableData = {'friends':[{
@@ -118,7 +131,7 @@ export default class MainApp extends Component{
 
       return(
           <div>
-             <AppConnect columns={columns} rowdata={theRows} />
+             <AppConnect columns={columns} rowdata={theRows} externalForm={ExternalForm}/>
         <AppConnect columns={newTable} rowdata={newTableData} />
         
         </div>

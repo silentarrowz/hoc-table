@@ -15,7 +15,19 @@ export default class Hello extends React.Component{
       BodyWrapper.shouldComponentUpdate = true;
       const RowWrapper = props => <tr {...props} />;
       RowWrapper.shouldComponentUpdate = true;
-      
+      let whichForm = (<Form columns={columns} rows={rows} state={state} 
+        submitData={this.props.submitData}
+        handleAllChange={this.props.handleAllChange}
+         />);
+      if(this.props.externalForm){
+       const formprops = {columns:columns,
+            rows:rows,
+            state:state,
+            submitData:this.props.submitData,
+            handleAllChange:this.props.handleAllChange
+        };
+        whichForm = this.props.externalForm(formprops);
+      }
       return(
         <div>
         <Table.Provider
@@ -34,10 +46,7 @@ export default class Hello extends React.Component{
           <Table.Body rows={rows} rowKey="id"/>
         </Table.Provider >
         {this.props.state.showForm
-                  ? <Form columns={columns} rows={rows} state={state} 
-                  submitData={this.props.submitData}
-                  handleAllChange={this.props.handleAllChange}
-                   />  :'' }
+                  ? whichForm :'' }
         </div>
       );
     }

@@ -94,7 +94,7 @@ class App extends React.Component {
     
    
       <Hello  
-      
+      externalForm = {this.props.externalForm}
       columns={this.state.columns}
       rows={rowz} 
       state={this.state}
