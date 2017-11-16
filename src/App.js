@@ -5,63 +5,7 @@ import * as Table from 'reactabular-table';
 import * as edit from 'react-edit';
 import { connect } from 'react-redux';
 import actions from './actions';
-
-
-const Form = (props) =>{
-  const propState = props.state;
-  return (  <form>
- { props.columns.map((item,idx)=>(
-   <div key={idx} >
-  {item.property}   <input 
-      type='text'
-      name={item.property}
-      value={propState[item.property]}
-      onChange={props.handleAllChange}
-       /><br/>
-       </div>
-  ))}
-  <button
-              type="submit"
-             onClick={props.submitData}
-            >Submit</button>
-  </form>)
-};
-
-class Hello extends React.Component{
-  
-  render(){
-    const {columns,rows,state} =this.props;
-    const BodyWrapper = props => <tbody {...props} />;
-    BodyWrapper.shouldComponentUpdate = true;
-    const RowWrapper = props => <tr {...props} />;
-    RowWrapper.shouldComponentUpdate = true;
-    
-    return(
-      <div>
-      <Table.Provider
-        className="pure-table pure-table-striped"
-        columns={columns}
-        components={{
-    body: {
-      wrapper: BodyWrapper,
-      row: RowWrapper
-    }
-  }}
-
-      >
-        <Table.Header />
-      
-        <Table.Body rows={rows} rowKey="id"/>
-      </Table.Provider >
-      {this.props.state.showForm
-                ? <Form columns={columns} rows={rows} state={state} 
-                submitData={this.props.submitData}
-                handleAllChange={this.props.handleAllChange}
-                 />  :'' }
-      </div>
-    );
-  }
-}
+import Hello from './Hello';
 
 
 class App extends React.Component {
