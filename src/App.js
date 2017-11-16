@@ -30,7 +30,7 @@ const Form = (props) =>{
 class Hello extends React.Component{
   
   render(){
-    const {columns,rows,state} =this.props
+    const {columns,rows,state} =this.props;
     const BodyWrapper = props => <tbody {...props} />;
     BodyWrapper.shouldComponentUpdate = true;
     const RowWrapper = props => <tr {...props} />;
@@ -63,23 +63,6 @@ class Hello extends React.Component{
   }
 }
 
-/*
-const Hello =(props)=>(<div>
-<Table.Provider
-  className="pure-table pure-table-striped"
-  columns={props.columns}
->
-  <Table.Header />
-
-  <Table.Body rows={props.rows} rowKey="id"/>
-</Table.Provider >
-{props.state.showForm
-          ? <Form columns={props.columns} rows={props.rows} state={props.state} 
-          submitData={props.submitData}
-          handleAllChange={props.handleAllChange}
-           />  :'' }
-</div>);
-*/
 
 class App extends React.Component {
   constructor(props) {
@@ -87,18 +70,11 @@ class App extends React.Component {
 
     this.state = {
       columns: this.getColumns(this.props.columns), // initial columns
-     /* name: '',
-      id: '',
-      dad: '',
-      mom: '',*/
       whichTable:this.getTableKey(this.props.rowdata),
       showForm:false
-     // showForm: false,
     };
 
-   /* this.handleName = this.handleName.bind(this);
-    this.handleDadName = this.handleDadName.bind(this);
-    this.handleMomName = this.handleMomName.bind(this); */
+  
     this.submitData = this.submitData.bind(this);
     this.handleAllChange = this.handleAllChange.bind(this);
   }
@@ -125,40 +101,6 @@ class App extends React.Component {
       }
     });
 
-      
-
-    /*
-    const columns = [
-      {
-        property: 'name',
-        header: {
-          label: 'Name'
-        },
-        cell: {
-          transforms: [editable(edit.input())],
-        }
-      },
-      {
-        property: 'dad',
-        header: {
-          label: 'Dad'
-        },
-        cell: {
-          transforms: [editable(edit.input())],
-        }
-      },
-      {
-        property: 'mom',
-        header: {
-          label: 'Mom'
-        },
-        cell: {
-          transforms: [editable(edit.input())],
-        }
-      }
-    ];
-    */
-
     columns.map((item)=>{
       item.cell.transforms = [editable(edit.input())];
     });
@@ -177,27 +119,7 @@ class App extends React.Component {
     console.log('newstate is : ',newState);
     this.setState(newState);
   }
-/*
-  handleName(e) {
-    console.log(e.target.value);
-    this.setState({
-      name: e.target.value,
-    });
-  }
 
-  handleDadName(e) {
-    console.log(e.target.value);
-    this.setState({
-      dad: e.target.value,
-    });
-  }
-
-  handleMomName(e) {
-    this.setState({
-      mom: e.target.value,
-    });
-  }
-*/
   submitData(e) {
     e.preventDefault();
     this.setState({
