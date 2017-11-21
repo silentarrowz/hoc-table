@@ -4,8 +4,12 @@ import './App.css';
 import * as Table from 'reactabular-table';
 import * as edit from 'react-edit';
 import { connect } from 'react-redux';
-import actions from './actions';
+//import actions from './actions';
+import {editRow,addRows} from './actions';
 import Hello from './Hello';
+import {AddRowData} from './actions';
+import { bindActionCreators } from 'redux';
+
 
 
 class App extends React.Component {
@@ -14,8 +18,9 @@ class App extends React.Component {
 
     this.state = {
       columns: this.getColumns(this.props.columns), // initial columns
-      whichTable:this.getTableKey(this.props.rowdata),
+      //whichTable:'friends',              //this.getTableKey(this.props.rows),
       showForm:false
+      
     };
 
   
@@ -23,10 +28,22 @@ class App extends React.Component {
     this.handleAllChange = this.handleAllChange.bind(this);
   }
 
+  componentWillMount(){
+    console.log('component about to mount');
+    this.props.addRowsFunc('friends');
+    this.setState({
+      rowdata:this.props.rows,
+      whichTable:'friends'
+    });
+  }
+
+
   getTableKey(rowdata){
    const tableKey= (Object.keys(rowdata))[0];
    //const tableName = this.props.rowdata[tableKey];
-   return tableKey;
+   
+     return tableKey
+   
   }
   
   getColumns(columns) {
@@ -70,13 +87,17 @@ class App extends React.Component {
       showForm: false,
     });
     const stateItems = this.state;
-    this.props.editFunc(stateItems, this.props.rowdata);
+    this.props.editFunc(stateItems, this.props.id);
   }
 
   render(){
    let rowz='';
-   let whichTable = this.state.whichTable;
-    if(this.props.rows && this.props.rows[whichTable]){
+   let whichTable = this.props.id;
+   if(this.props.rows){
+    rowz = this.props.rows[whichTable];
+    
+   }
+  /*  if(this.props.rows && this.props.rows[whichTable]){
       let tableKeys = Object.keys(this.props.rows);
       if(tableKeys.indexOf(whichTable)!= -1){
         rowz = this.props.rows[whichTable];
@@ -89,26 +110,30 @@ class App extends React.Component {
         rowz=this.props.rowdata[rowdataKey];
       }
       
-    }
+    } */
     return(   <div className="App">
-    
-   
-      <Hello  
+    {
+      rowz? <Hello  
+      handleMyOwnChange ={this.props.handleMyOwnChange}
       externalForm = {this.props.externalForm}
       columns={this.state.columns}
       rows={rowz} 
       state={this.state}
       handleAllChange={this.handleAllChange}
       submitData={this.submitData}
-       />
+       /> : 'no data in rows'
+    }
+   
+     
     
   </div>);
   }
  };
   
+ 
 
- const mapStateToProps = (state) => ({
-  rows: state,
+ const mapStateToProps = (state,whichTable) => ({
+  rows: state[whichTable.id]
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -119,7 +144,9 @@ const mapDispatchToProps = (dispatch) => ({
     row: { name: 'John Doe', id: uuid.v4() }
   }),
   */
-  editFunc: (stateItems, rows) => dispatch(actions.editRow(stateItems, rows)),
+  addRowsFunc:bindActionCreators(AddRowData,dispatch),
+  
+  editFunc: (stateItems, rows) => dispatch(editRow(stateItems, rows)),
   confirmEdit: (property, value, id) => dispatch({
     type: 'CONFIRM_EDIT',
     row: { property, value, id },

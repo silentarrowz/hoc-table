@@ -1,30 +1,39 @@
 import { cloneDeep, findIndex,merge } from 'lodash';
+//import initialState from './initialState';
 
 
-const reducer = (state, action) => {
+const reducer = (state={}, action) => {
   const row = action.row;
   const index = row && findIndex(state, { id: row.id });
 
   switch (action.type) {
-    /*
-    case 'CREATE_ROW':
-    	console.log([row].concat(state));
-
-      return [row].concat(state);
-
-    case 'DELETE_ROW': {
-      if (index >= 0) {
-        return state.slice(0, index).concat(state.slice(index + 1));
+    case 'ADD_ROWS_DATA':{
+      console.log(row.rows);
+      
+        const whichTable= action.row.identifier;
+        const newState = merge({},state,{[whichTable]:row.rows}) ;
+        //have to make sure that this merging
+        // doesnt wipe out another table's data
+        console.log('row added to state : ',newState);
+      return newState
       }
-
-      return state;
-    }
-    */
     case 'EDIT_ROW': {
       const tableToEdit = action.row.stateItems.whichTable;
       
       if(state){
-          const editingRows = cloneDeep(state);
+          const editingState = cloneDeep(state);
+          const tableEditing = editingState[tableToEdit][tableToEdit];
+          for(let i=0;i<tableEditing.length;i++){
+           Object.keys(tableEditing[i]).forEach((item)=>{
+             if(tableEditing[i].id ===action.row.stateItems.id){
+              tableEditing[i][item]=action.row.stateItems[item];
+              
+             }
+           });
+          }
+          console.log(editingState);
+          return editingState;
+          /*
           if(editingRows[tableToEdit]){
             for(let i=0;i<editingRows[tableToEdit].length;i++){
              if(editingRows[tableToEdit][i].id === action.row.stateItems.id){
@@ -51,7 +60,7 @@ const reducer = (state, action) => {
             const newState = merge({},state,newRows);
             console.log('newState is : ',newState);
             return newState;
-          }
+          } 
          //const newRowData = action.row.rows;
         
         
@@ -71,10 +80,10 @@ const reducer = (state, action) => {
         return newState;
       }
      
-   
+   */
      
     }
-
+  }
 
     case 'CONFIRM_EDIT': {
       if (index >= 0) {

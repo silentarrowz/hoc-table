@@ -4,6 +4,17 @@ import ExternalForm from './ExternalForm';
 
 
 export default class MainApp extends Component{
+
+/*
+  componentWillMount(){
+    console.log('component about to mount');
+    this.props.addRowsFunc('friends');
+    this.setState({
+      rowdata:this.props.rows,
+      whichTable:'friends'
+    });
+  }
+ */
     
    render(){
         const columns = [
@@ -38,6 +49,15 @@ export default class MainApp extends Component{
               property: 'gender',
               header: {
                 label: 'Gender'
+              },
+              cell: {
+                transforms: '',
+              }
+            },
+            {
+              property: 'color',
+              header: {
+                label: 'Color'
               },
               cell: {
                 transforms: '',
@@ -98,16 +118,19 @@ export default class MainApp extends Component{
             name: 'Adam',
             dad: 'John',
             mom:'Trisha',
-            gender:'Male'
+            gender:'Male',
+            color:'Red'
             },
           {
             id: 101,
             name: 'Betty',
             dad: 'George',
             mom:'Benny',
-            gender:'Male'
+            gender:'Male',
+            color:'Blue'
             }]};
 
+            /*
        const newTableData = {'friends':[{
             id: 100,
             location: 'Goa',
@@ -128,11 +151,13 @@ export default class MainApp extends Component{
           }
       
             ]};
+            */
+  
+//             <AppConnect columns={columns} rowdata={theRows} externalForm={ExternalForm}/>
 
       return(
           <div>
-             <AppConnect columns={columns} rowdata={theRows} externalForm={ExternalForm}/>
-        <AppConnect columns={newTable} rowdata={newTableData} />
+        <AppConnect columns={newTable} id='friends' />
         
         </div>
       )  

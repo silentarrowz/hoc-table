@@ -16,7 +16,12 @@ const ExternalForm = (props) =>{
              props.columns.map((item,idx)=>(
    <div key={idx} >
    {item.property}  {
-           item.property === 'gender'?( <select name="gender" value={propState[item.property]} onChange={props.handleAllChange}>
+       item.property === 'color'?(<div><input onChange={props.handleAllChange} name="color" type="radio" value="Red" />
+                <label >Red</label>
+                <input onChange={props.handleAllChange} name="color" type="radio" value="Blue" />
+                <label >Blue</label> </div> 
+                ):
+          ( item.property === 'gender'?( <select name="gender" value={propState[item.property]} onChange={props.handleAllChange}>
             <option  value="Male">Male</option>
             <option value="Female">Female</option>
             </select>):  (  <input 
@@ -24,7 +29,7 @@ const ExternalForm = (props) =>{
       name={item.property}
       value={propState[item.property]}
       onChange={props.handleAllChange}
-       />) }
+       />)) }
             <br/>
        </div>
   ))}
