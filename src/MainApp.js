@@ -112,7 +112,7 @@ export default class MainApp extends Component{
               }
             }
           ];
-
+/*
       const theRows = {'dad':[{
             id: 100,
             name: 'Adam',
@@ -129,6 +129,7 @@ export default class MainApp extends Component{
             gender:'Male',
             color:'Blue'
             }]};
+            */
 
             /*
        const newTableData = {'friends':[{
@@ -154,10 +155,16 @@ export default class MainApp extends Component{
             */
   
 //             <AppConnect columns={columns} rowdata={theRows} externalForm={ExternalForm}/>
+//        <AppConnect columns={newTable} id='friends' />
+//       <AppConnect columns={columns} id='dad' />
+
+
 
       return(
           <div>
-        <AppConnect columns={newTable} id='friends' />
+       <AppConnect columns={newTable} id='friends' />
+       <AppConnect columns={columns} id='dad' />
+
         
         </div>
       )  

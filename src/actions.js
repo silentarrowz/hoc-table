@@ -1,9 +1,11 @@
 import uuid from 'uuid';
+import $ from 'jquery';
 
 
 
+  export const AddRowData = (identifier)  =>(dispatch) => {
 
-  export function AddRowData(identifier){
+    /*
     const newTableData = {'friends':[{
       id: 100,
       location: 'Goa',
@@ -24,12 +26,57 @@ import uuid from 'uuid';
     }
     
       ]};
-    
-    return (dispatch) => {
-      dispatch(addRows(newTableData,identifier));
+
+      const theRows = {'dad':[{
+        id: 100,
+        name: 'Adam',
+        dad: 'John',
+        mom:'Trisha',
+        gender:'Male',
+        color:'Red'
+        },
+      {
+        id: 101,
+        name: 'Betty',
+        dad: 'George',
+        mom:'Benny',
+        gender:'Male',
+        color:'Blue'
+        }]};
+        */
+
+         function dataFromAjax (dispatch){
+          var root = 'http://localhost:8080/';
+          $.ajax({
+            url: root + identifier,
+            method: 'GET',
+            success:function(data) {
+              console.log('data from server : ',data);
+              
+                dispatch(addRows(data,identifier));
+              
+            }
+          })
+          /*
+          .then(function(data) {
+            console.log('data from server : ',data);
+            return (dispatch) => {
+              dispatch(addRows(data,identifier));
+            }
+          }); 
+          */
+        }
+
+        dataFromAjax(dispatch);
+        /*
+        return (dispatch) => {
+      dispatch(addRows(dataFromServer,identifier));
     }
+    */
     
   }
+
+
  export function addRows(rows,identifier){
   return {
     type:'ADD_ROWS_DATA',

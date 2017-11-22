@@ -22,7 +22,7 @@ const reducer = (state={}, action) => {
       
       if(state){
           const editingState = cloneDeep(state);
-          const tableEditing = editingState[tableToEdit][tableToEdit];
+          const tableEditing = editingState[tableToEdit];
           for(let i=0;i<tableEditing.length;i++){
            Object.keys(tableEditing[i]).forEach((item)=>{
              if(tableEditing[i].id ===action.row.stateItems.id){

@@ -30,10 +30,10 @@ class App extends React.Component {
 
   componentWillMount(){
     console.log('component about to mount');
-    this.props.addRowsFunc('friends');
+    this.props.addRowsFunc(this.props.id);
     this.setState({
       rowdata:this.props.rows,
-      whichTable:'friends'
+      whichTable:this.props.id
     });
   }
 
@@ -94,7 +94,7 @@ class App extends React.Component {
    let rowz='';
    let whichTable = this.props.id;
    if(this.props.rows){
-    rowz = this.props.rows[whichTable];
+    rowz = this.props.rows;
     
    }
   /*  if(this.props.rows && this.props.rows[whichTable]){
